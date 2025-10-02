@@ -2,6 +2,16 @@
 
 import pandas as pd
 
+
+def load_data(filename="simulation_results.csv"):
+    """Loads agent-based simulation results from CSV file."""
+    try:
+        data = pd.read_csv(filename)
+        return data
+    except FileNotFoundError:
+        print(f"[ERROR] File '{filename}' not found. Run main.py first to generate it.")
+        return None
+
 class DataCollector:
     """Collects simulation data each timestep."""
     def __init__(self):
