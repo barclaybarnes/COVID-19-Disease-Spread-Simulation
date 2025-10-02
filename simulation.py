@@ -1,5 +1,6 @@
 # simulation.py - Defines the Simulation class to manage the epidemic simulation.
 import random
+from data_collector import DataCollector
 
 class Simulation:
     def __init__(self, population=1000, beta=0.1, sigma=0.2, gamma=0.14, nu=0.02):
@@ -10,6 +11,7 @@ class Simulation:
         self.sigma = sigma
         self.gamma = gamma
         self.nu = nu
+        self.data_collector = DataCollector()
 
     def step(self):
         self.day += 1
