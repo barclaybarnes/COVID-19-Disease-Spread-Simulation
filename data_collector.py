@@ -1,7 +1,9 @@
 # data_collector.py
+
 import pandas as pd
 
 class DataCollector:
+    """Collects simulation data each timestep."""
     def __init__(self):
         self.records = []
 
@@ -19,3 +21,5 @@ class DataCollector:
     def to_csv(self, filename="simulation_results.csv"):
         df = pd.DataFrame(self.records)
         df.to_csv(filename, index=False)
+        print(f"[INFO] Results saved to {filename}")
+
