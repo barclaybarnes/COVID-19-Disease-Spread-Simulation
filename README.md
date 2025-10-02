@@ -46,3 +46,6 @@ Quick Run Reference
 python main.py          # Run single simulation
 python -m validation    # Compare with SEIRV ODE
 python run_multiple.py  # Multi-run stochastic average
+
+Install Dependencies
+pip install -r requirements.txt
