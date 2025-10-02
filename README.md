@@ -1,29 +1,161 @@
-This project develops an agent-based simulation of COVID-19 using the SEIRV (Susceptible, Exposed, Infected, Recovered, Vaccinated) framework.
-Each agent represents an individual with personal attributes such as mask use and vaccination status.
-Agents interact randomly each day, and transmission occurs probabilistically according to calibrated parameters from published research.
-The model extends the classical SEIR equations to a stochastic environment, capturing variability and uncertainty in epidemic outcomes.
+# 🧬 COVID-19 Agent-Based Simulation (SEIRV)
 
-Implemented in Python, the simulation logs population states over time, visualizes infection curves, and validates its behavior against an analytical SEIRV differential-equation model.
-Multiple runs support statistical averaging to evaluate intervention effectiveness.
+This project implements an **agent-based SEIRV (Susceptible–Exposed–Infected–Recovered–Vaccinated)** model of COVID-19 using Python.  
 
-This tool provides a flexible platform for exploring the impact of preventive measures, vaccination rates, and transmission parameters on epidemic dynamics.
-It is designed for educational, analytical, and research use in studying infectious-disease spread.
+The simulation represents individuals as agents interacting under probabilistic rules, allowing exploration of **mask usage, vaccination rates, and stochastic variability** in disease spread. It also compares **Agent-Based Model (ABM)** results against deterministic SEIR differential equations (ODEs) for validation.
 
-Implemented
+---
 
-SEIRV Agent-Based Model
+## 📘 Project Overview
 
-Random contact mechanism
+The model extends classical SEIR equations into a probabilistic agent-based environment. Each agent has attributes such as:
 
-Parameter calibration (β, e_m, e_v)
+- **Infection state:** S, E, I, R, V  
+- **Mask usage**  
+- **Vaccination status**
 
-CSV logging and Matplotlib visualization
+Agents meet randomly each day, and infections occur with probability:
 
-ODE validation framework
+\[
+𝑃(infection) = 𝛽 ⋅ (1 − $e_m$) ⋅ (1 − $e_v$)
+\]
 
-Stochastic multi-run analysis
+Where:
 
-References
+- $\beta$ = base transmission probability  
+- $e_m$ = mask effectiveness 
+- $e_v$ = vaccine effectiveness  
+
+This setup enables simulation of different intervention strategies and their impact on outbreak dynamics.
+
+---
+
+## 🚧 Project Status
+
+### ✅ Implemented
+
+- Agent-based SEIRV core model  
+- Random contact mechanism  
+- Calibrated parameters (\(\beta, e_m, e_v\))  
+- CSV logging and Matplotlib plotting  
+- ODE-based validation framework  
+
+### 🛠️ Upcoming Enhancements
+
+- JSON input for configurable parameters  
+- Graph-based contact structure using **networkx**  
+- GUI for simulation control  
+- Integration with real data
+
+### 💡 Future Work
+
+- Extend contact structure to social networks  
+- Add quarantine, testing, and lockdown interventions  
+- Optimize performance for larger populations  
+- Incorporate spatial mobility and geography  
+- Multi-run stochastic analysis  
+
+---
+
+## ⚙️ Installation
+
+### Prerequisites
+
+- Python **3.10+**  
+- Git  
+
+### Clone Repository
+
+```bash
+git clone https://github.com/<your-username>/covid19-simulation.git
+cd covid19-simulation
+pip install -r requirements.txt
+```
+
+## 🧱 Project Structure
+```
+covid19_simulation/
+│
+├── agent.py              # Agent class (S, E, I, R, V)
+├── environment.py        # Population generation and random mixing
+├── simulation.py         # SEIRV logic and daily transitions
+├── data_collector.py     # Data collection and CSV export
+├── visualization.py      # Epidemic curve plotting
+├── validation.py         # ODE SEIRV model comparison
+├── run_multiple.py       # Multi-run stochastic analysis
+├── config.py             # Parameter calibration
+├── main.py               # Simulation entry point
+│
+├── requirements.txt      # Dependencies
+├── README.md             # Documentation
+└── .gitignore            # Ignore caches, CSV, IDE files
+```
+---
+
+## 🧪 Usage
+
+### 🧩 Run a Single Simulation
+
+Runs one SEIRV agent-based simulation and plots epidemic curves.
+
+```bash
+python main.py
+```
+Output:
+
+simulation_results.csv saved
+
+Infection curve plotted
+
+### 📈 Validate Against Theoretical SEIRV (ODE)
+
+Compares Agent-Based Model (ABM) results to a deterministic SEIRV differential equation model.
+```bash
+python -m validation
+```
+Output:
+
+Displays a shaded uncertainty plot (mean ± std. deviation)
+
+Compares ODE predictions with ABM outcomes
+
+### 🧮 Parameter Specification
+| Parameter | Description             | Source                 | Value |
+| --------- | ----------------------- | ---------------------- | ----- |
+| β         | Transmission rate       | Ferguson et al. (2020) | 0.10  |
+| e_m       | Mask effectiveness      | Chu et al. (2020)      | 0.60  |
+| e_v       | Vaccine effectiveness   | Bubar et al. (2021)    | 0.85  |
+| σ         | Incubation rate (1/5 d) | WHO                    | 0.20  |
+| γ         | Recovery rate (1/7 d)   | Ferguson et al.        | 0.14  |
+| ν         | Vaccination rate        | Bubar et al. (2021)    | 0.02  |
+
+## 🧩 Architecture Overview
+
+The system follows an agent-based architecture with modular, object-oriented design.
+
+| Component     | Description                                            |
+| ------------- | ------------------------------------------------------ |
+| Agent         | Represents an individual (health state, mask, vaccine) |
+| Environment   | Holds the entire population and defines contact rules  |
+| Simulation    | Core SEIRV logic controlling infection and recovery    |
+| DataCollector | Records population states each day                     |
+| Visualization | Plots epidemic curves using Matplotlib                 |
+| Validation    | Compares ABM outputs against SEIRV ODE predictions     |
+
+### 🔬 Validation Strategy
+
+The ABM results are validated via:
+
+Comparative Validation
+Using the SEIRV ODE system solved via SciPy’s odeint to confirm infection curve trends.
+
+Empirical Validation
+Comparing simulated outbreak shapes to early COVID-19 data.
+
+Stochastic Replication
+Running multiple iterations to measure variability and ensure consistency.
+
+## References
 
 Kermack, W.O., & McKendrick, A.G. (1927). A Contribution to the Mathematical Theory of Epidemics.
 
@@ -37,15 +169,18 @@ Allen, L. (2017). A Primer on Stochastic Epidemic Models.
 
 Giordano et al. (2020). Modelling the COVID-19 epidemic and implementation of population-wide interventions.
 
+## Project Author
+
 Barclay Barnes
 College of Computing and Software Engineering
 Kennesaw State University
 Email: bbarne74@students.kennesaw.edu
 
-Quick Run Reference
+## Quick Run Reference
 python main.py          # Run single simulation
 python -m validation    # Compare with SEIRV ODE
-python run_multiple.py  # Multi-run stochastic average
 
 Install Dependencies
 pip install -r requirements.txt
+
+
