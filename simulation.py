@@ -7,8 +7,8 @@ from data_collector import DataCollector
 class Simulation:
     """Main simulation manager controlling the SEIRV process."""
 
-    def __init__(self, population=1000, beta=0.1, sigma=0.2, gamma=0.14, nu=0.02,
-                 mask_effect=0.6, vaccine_effect=0.85):
+    def __init__(self, population=1000, beta=0.10, sigma=0.20, gamma=0.14, nu=0.02,
+                 mask_effect=0.60, vaccine_effect=0.85):
         self.environment = Environment(population)
         self.data_collector = DataCollector()
         self.day = 0
@@ -44,7 +44,17 @@ class Simulation:
                         p = self.infection_probability(agent, other)
                         if random.random() < p:
                             other.state = 'E'
-
+        # Verification print statements
+        for agent in agents:
+            if agent.state == 'I':
+                contacts = random.sample(agents, k=min(10, len(agents)))
+                for other in contacts:
+                    if other.state == 'S':
+                        p = self.infection_probability(agent, other)
+                        if random.random() < p:
+                            other.state = 'E'
+                            print(
+                                f"Day {self.day}: Agent {agents.index(agent)} infected Agent {agents.index(other)} (p={p:.3f})")
         # Disease progression
         for agent in agents:
             if agent.state == 'E' and random.random() < self.sigma:
