@@ -15,6 +15,9 @@ if __name__ == "__main__":
     for _ in range(200):
         sim.step()
 
+    agents = sim.environment.population
+    total_recovered = sum(1 for agent in agents if agent.state == 'R')
+    print(f"Total recovered: {total_recovered}")
     sim.data_collector.to_csv("simulation_results.csv")
     plot_epidemic_curve("simulation_results.csv")
 

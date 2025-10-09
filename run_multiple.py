@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+
 def run_multiple(n_runs=10, population=1000, timesteps=200):
     """Run multiple stochastic simulations to compute mean infection curve."""
     all_runs = []

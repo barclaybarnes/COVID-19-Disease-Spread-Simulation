@@ -24,6 +24,10 @@ class Simulation:
         # Initialize one infected case
         self.environment.population[0].state = 'I'
 
+        # Ensure at least one infected individual
+        if not any(agent.state == 'I' for agent in self.environment.population):
+            self.environment.population[0].state = 'I'
+
     def infection_probability(self, agent_i, agent_j):
         """Equation 6: P(infection) = β * (1 - e_m) * (1 - e_v)"""
         e_m = self.mask_effect if agent_i.mask or agent_j.mask else 0
@@ -53,8 +57,7 @@ class Simulation:
                         p = self.infection_probability(agent, other)
                         if random.random() < p:
                             other.state = 'E'
-                            print(
-                                f"Day {self.day}: Agent {agents.index(agent)} infected Agent {agents.index(other)} (p={p:.3f})")
+                            print(f"Day {self.day}: Agent {agent.id} infected Agent {other.id} (p={p:.3f})")
         # Disease progression
         for agent in agents:
             if agent.state == 'E' and random.random() < self.sigma:

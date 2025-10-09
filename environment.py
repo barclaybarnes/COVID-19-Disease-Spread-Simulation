@@ -1,4 +1,5 @@
 # environment.py
+# environment.py
 import random
 
 class Environment:
@@ -10,6 +11,7 @@ class Environment:
             mask = random.random() < mask_rate
             vaccinated = random.random() < vaccine_rate
             self.population.append(Agent(i, mask, vaccinated))
+
 
 
 

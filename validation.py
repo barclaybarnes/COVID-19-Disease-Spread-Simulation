@@ -72,6 +72,12 @@ def run_validation(beta=0.10, sigma=0.20, gamma=0.14, nu=0.02,
     log("Validation complete — showing plot.")
     plt.show()
 
+    total_population = S + E + I + R + V
+    if not np.allclose(total_population, N, atol=1e-2):
+        log(f"Warning: Population not conserved. Range: [{total_population.min():.2f}, {total_population.max():.2f}]")
+    else:
+        log("Population conserved throughout simulation.")
+
 if __name__ == "__main__":
     # default run: small nonzero E0 & I0 so infection can start
     run_validation()
