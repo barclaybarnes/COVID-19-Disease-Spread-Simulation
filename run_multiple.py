@@ -6,9 +6,8 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-
-def run_multiple(n_runs=10, population=1000, timesteps=200):
-    """Run multiple stochastic simulations to compute mean infection curve."""
+def run_multiple(n_runs=50, population=1000, timesteps=200):
+    """Run multiple stochastic ABM simulations and plot mean ± std infection curve."""
     all_runs = []
 
     for r in range(n_runs):
@@ -28,10 +27,15 @@ def run_multiple(n_runs=10, population=1000, timesteps=200):
     plt.figure(figsize=(8, 4))
     plt.plot(mean_I, label="Mean Infected")
     plt.fill_between(range(len(mean_I)),
-                     mean_I - std_I, mean_I + std_I, alpha=0.3)
-    plt.title("Mean Infection Curve Across 10 Simulations")
+                     mean_I - std_I, mean_I + std_I, alpha=0.3, label="±1 Std Dev")
+    plt.title(f"Mean Infection Curve Across {n_runs} Simulations")
     plt.xlabel("Day")
     plt.ylabel("Infected Count")
     plt.legend()
     plt.tight_layout()
     plt.show()
+
+if __name__ == "__main__":
+    run_multiple()
+
+
