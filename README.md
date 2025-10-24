@@ -1,6 +1,6 @@
 # 🧬 COVID-19 Agent-Based Simulation (SEIRV)
 
-This project implements an **agent-based SEIRV (Susceptible–Exposed–Infected–Recovered–Vaccinated)** model of COVID-19 using Python.  
+This project implements an **agent-based SEIRV (Susceptible–Exposed–Infected–Recovered–Vaccinated)** model of COVID-19 using Python.
 
 The simulation represents individuals as agents interacting under probabilistic rules, allowing exploration of **mask usage, vaccination rates, and stochastic variability** in disease spread. It also compares **Agent-Based Model (ABM)** results against deterministic SEIR differential equations (ODEs) for validation.
 
@@ -16,17 +16,27 @@ The model extends classical SEIR equations into a probabilistic agent-based envi
 
 Agents meet randomly each day, and infections occur with probability:
 
-\[
-𝑃(infection) = 𝛽 ⋅ (1 − $e_m$) ⋅ (1 − $e_v$)
-\]
+P(infection) = β ⋅ (1 − e_m) ⋅ (1 − e_v)
 
 Where:
 
-- $\beta$ = base transmission probability  
-- $e_m$ = mask effectiveness 
-- $e_v$ = vaccine effectiveness  
+- β = base transmission probability  
+- e_m = mask effectiveness  
+- e_v = vaccine effectiveness  
 
 This setup enables simulation of different intervention strategies and their impact on outbreak dynamics.
+
+---
+
+## ✨ New Features
+
+- Resource monitoring: background `ResourceMonitor` collects per\-process and system metrics and writes `resource_usage.csv` (requires `psutil`).
+- Warm\-up of CPU counters, per\-sample error diagnostics, and stable CSV output (writes `"N/A"` when metrics are unavailable).
+- Multi\-run analysis: `run_multiple.py` runs many stochastic simulations, computes mean ± std, exports `simulation_results_mean.csv`, and optionally overlays ODE results.
+- Animated visualization: `animated_epidemic_curve.py` animates results from `simulation_results.csv` with interactive controls (play/pause, checkboxes, slider).
+- Validation improvements: `validation.py` continues to solve ODE SEIRV via `scipy.integrate.odeint` and now reports diagnostics and overlays ABM CSV when available.
+- CSV logging: all major modules export deterministic CSVs for reproducibility (`simulation_results.csv`, `simulation_results_mean.csv`, `resource_usage.csv`).
+- Requirements updated: `psutil` required for resource monitoring; `python>=3.11` is listed in `requirements.txt`.
 
 ---
 
@@ -34,18 +44,21 @@ This setup enables simulation of different intervention strategies and their imp
 
 ### ✅ Implemented
 
-- Agent-based SEIRV core model  
+- Agent\-based SEIRV core model  
 - Random contact mechanism  
-- Calibrated parameters (\(\beta, e_m, e_v\))  
+- Calibrated parameters (\β, e_m, e_v)  
 - CSV logging and Matplotlib plotting  
-- ODE-based validation framework  
+- ODE\-based validation framework  
+- Resource monitor with diagnostics and CSV output  
+- Multi\-run batching and mean/std aggregation  
+- Animated epidemic curve with interactive widgets
 
 ### 🛠️ Upcoming Enhancements
 
 - JSON input for configurable parameters  
-- Graph-based contact structure using **networkx**  
+- Graph\-based contact structure using `networkx`  
 - GUI for simulation control  
-- Integration with real data
+- Integration with real epidemiological data
 
 ### 💡 Future Work
 
@@ -53,7 +66,7 @@ This setup enables simulation of different intervention strategies and their imp
 - Add quarantine, testing, and lockdown interventions  
 - Optimize performance for larger populations  
 - Incorporate spatial mobility and geography  
-- Multi-run stochastic analysis  
+- More extensive multi\-run parameter sweeps and CI estimation
 
 ---
 
@@ -61,7 +74,7 @@ This setup enables simulation of different intervention strategies and their imp
 
 ### Prerequisites
 
-- Python **3.10+**  
+- Python `>=3.11`  
 - Git  
 
 ### Clone Repository
@@ -69,26 +82,28 @@ This setup enables simulation of different intervention strategies and their imp
 ```bash
 git clone https://github.com/<your-username>/covid19-simulation.git
 cd covid19-simulation
-pip install -r requirements.txt
-```
+python -m pip install -r requirements.txt
+python -m pip install psutil
 
 ## 🧱 Project Structure
 ```
 covid19_simulation/
 │
-├── agent.py              # Agent class (S, E, I, R, V)
-├── environment.py        # Population generation and random mixing
-├── simulation.py         # SEIRV logic and daily transitions
-├── data_collector.py     # Data collection and CSV export
-├── visualization.py      # Epidemic curve plotting
-├── validation.py         # ODE SEIRV model comparison
-├── run_multiple.py       # Multi-run stochastic analysis
-├── config.py             # Parameter calibration
-├── main.py               # Simulation entry point
+├── agent.py                      # Agent class (S, E, I, R, V)
+├── environment.py                # Population generation and random mixing
+├── simulation.py                 # SEIRV logic and daily transitions
+├── data_collector.py             # Data collection and CSV export
+├── visualization.py              # Epidemic curve plotting
+├── animated_epidemic_curve.py    # Animated plot with controls
+├── validation.py                 # ODE SEIRV model comparison and diagnostics
+├── run_multiple.py               # Multi\-run stochastic analysis (mean/std)
+├── resource_monitor.py           # Background resource sampling & CSV export
+├── config.py                     # Parameter calibration
+├── main.py                       # Simulation entry point (single run)
 │
-├── requirements.txt      # Dependencies
-├── README.md             # Documentation
-└── .gitignore            # Ignore caches, CSV, IDE files
+├── requirements.txt              # Dependencies (includes psutil)
+├── README.md                     # Documentation
+└── .gitignore                    # Ignore caches, CSV, IDE files
 ```
 ---
 
@@ -118,6 +133,12 @@ Output:
 Displays a shaded uncertainty plot (mean ± std. deviation)
 
 Compares ODE predictions with ABM outcomes
+
+### Run Multi-run (mean ± std) and Resource Monitor
+Runs n_runs simulations, computes mean and std deviation, saves simulation_results_mean.csv, and records resource usage to resource_usage.csv.
+```bash
+python -m run_multiple
+```
 
 ### 🧮 Parameter Specification
 | Parameter | Description             | Source                 | Value |
