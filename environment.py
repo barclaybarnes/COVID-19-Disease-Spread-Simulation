@@ -1,5 +1,5 @@
 # environment.py
-# environment.py
+
 import random
 
 class Environment:
