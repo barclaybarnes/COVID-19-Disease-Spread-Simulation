@@ -24,7 +24,7 @@ def seirv_ode(y, t, beta, sigma, gamma, nu):
     return [dSdt, dEdt, dIdt, dRdt, dVdt]
 
 def run_validation(beta=0.10, sigma=0.20, gamma=0.14, nu=0.02,
-                   N=1000, E0=1, I0=1, R0=0, V0=0, days=160,
+                   N=1000, E0=1, I0=1, R0=0, V0=0, days=200,
                    overlay_abm=True, abm_csv="simulation_results.csv"):
     log("Starting SEIRV ODE validation...")
 

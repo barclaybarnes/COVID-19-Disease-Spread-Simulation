@@ -17,7 +17,7 @@ def seirv_ode(y, t, beta, sigma, gamma, nu):
     dVdt = nu * S
     return [dSdt, dEdt, dIdt, dRdt, dVdt]
 
-def run_multiple(n_runs=50, population=5000, timesteps=200, resource_csv='resource_usage.csv'):
+def run_multiple(n_runs=50, population=1000, timesteps=200, resource_csv='resource_usage.csv'):
     # Start resource monitor sampling every 0.10s
     monitor = ResourceMonitor(interval=0.1, csv_path=resource_csv)
     monitor.start()
