@@ -66,7 +66,6 @@ This setup enables simulation of different intervention strategies and their imp
 - Add quarantine, testing, and lockdown interventions  
 - Optimize performance for larger populations  
 - Incorporate spatial mobility and geography  
-- More extensive multi\-run parameter sweeps and CI estimation
 
 ---
 
@@ -196,6 +195,10 @@ Barclay Barnes
 College of Computing and Software Engineering
 Kennesaw State University
 Email: bbarne74@students.kennesaw.edu
+
+## Extended Project Demo Video
+
+https://youtu.be/PyLvvBTn_oU
 
 ## Quick Run Reference
 python main.py          # Run single simulation
