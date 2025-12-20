@@ -1,4 +1,4 @@
-# 🧬 COVID-19 Agent-Based Simulation (SEIRV)
+# COVID-19 Agent-Based Simulation (SEIRV)
 
 This project implements an **agent-based SEIRV (Susceptible–Exposed–Infected–Recovered–Vaccinated)** model of COVID-19 using Python.
 
@@ -6,7 +6,7 @@ The simulation represents individuals as agents interacting under probabilistic 
 
 ---
 
-## 📘 Project Overview
+## Project Overview
 
 The model extends classical SEIR equations into a probabilistic agent-based environment. Each agent has attributes such as:
 
@@ -28,7 +28,7 @@ This setup enables simulation of different intervention strategies and their imp
 
 ---
 
-## ✨ New Features
+## New Features
 
 - Resource monitoring: background `ResourceMonitor` collects per\-process and system metrics and writes `resource_usage.csv` (requires `psutil`).
 - Warm\-up of CPU counters, per\-sample error diagnostics, and stable CSV output (writes `"N/A"` when metrics are unavailable).
@@ -40,9 +40,9 @@ This setup enables simulation of different intervention strategies and their imp
 
 ---
 
-## 🚧 Project Status
+## Project Status
 
-### ✅ Implemented
+### Implemented
 
 - Agent\-based SEIRV core model  
 - Random contact mechanism  
@@ -53,14 +53,14 @@ This setup enables simulation of different intervention strategies and their imp
 - Multi\-run batching and mean/std aggregation  
 - Animated epidemic curve with interactive widgets
 
-### 🛠️ Upcoming Enhancements
+### Upcoming Enhancements
 
 - JSON input for configurable parameters  
 - Graph\-based contact structure using `networkx`  
 - GUI for simulation control  
 - Integration with real epidemiological data
 
-### 💡 Future Work
+### Future Work
 
 - Extend contact structure to social networks  
 - Add quarantine, testing, and lockdown interventions  
@@ -69,7 +69,7 @@ This setup enables simulation of different intervention strategies and their imp
 
 ---
 
-## ⚙️ Installation
+## Installation
 
 ### Prerequisites
 
@@ -84,7 +84,7 @@ cd covid19-simulation
 python -m pip install -r requirements.txt
 python -m pip install psutil
 
-## 🧱 Project Structure
+## Project Structure
 ```
 covid19_simulation/
 │
@@ -106,9 +106,9 @@ covid19_simulation/
 ```
 ---
 
-## 🧪 Usage
+## Usage
 
-### 🧩 Run a Single Simulation
+### Run a Single Simulation
 
 Runs one SEIRV agent-based simulation and plots epidemic curves.
 
@@ -121,7 +121,7 @@ simulation_results.csv saved
 
 Infection curve plotted
 
-### 📈 Validate Against Theoretical SEIRV (ODE)
+### Validate Against Theoretical SEIRV (ODE)
 
 Compares Agent-Based Model (ABM) results to a deterministic SEIRV differential equation model.
 ```bash
@@ -139,7 +139,7 @@ Runs n_runs simulations, computes mean and std deviation, saves simulation_resul
 python -m run_multiple
 ```
 
-### 🧮 Parameter Specification
+### Parameter Specification
 | Parameter | Description             | Source                 | Value |
 | --------- | ----------------------- | ---------------------- | ----- |
 | β         | Transmission rate       | Ferguson et al. (2020) | 0.10  |
@@ -149,7 +149,7 @@ python -m run_multiple
 | γ         | Recovery rate (1/7 d)   | Ferguson et al.        | 0.14  |
 | ν         | Vaccination rate        | Bubar et al. (2021)    | 0.02  |
 
-## 🧩 Architecture Overview
+## Architecture Overview
 
 The system follows an agent-based architecture with modular, object-oriented design.
 
@@ -162,7 +162,7 @@ The system follows an agent-based architecture with modular, object-oriented des
 | Visualization | Plots epidemic curves using Matplotlib                 |
 | Validation    | Compares ABM outputs against SEIRV ODE predictions     |
 
-### 🔬 Validation Strategy
+### Validation Strategy
 
 The ABM results are validated via:
 
